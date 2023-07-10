@@ -1,22 +1,64 @@
-<h1>Lista de Personas</h1>
+<div class="container">
+  <h1>Lista de Personas</h1>
 
-<!-- Barra de búsqueda -->
-<input type="text" #fullName placeholder="Buscar por fullName" (keyup)="onSearch(fullName.value)">
+  <!-- Barra de búsqueda -->
+  <div class="row">
+    <div class="col-md-6">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Buscar por nombre" #fullName
+          (keyup)="onSearch(fullName.value)">
+      </div>
+    </div>
+  </div>
 
-<!-- Opciones de ordenamiento -->
-<label for="orderBy">Ordenar por:</label>
-<select [(ngModel)]="orderBy" (change)="sort()">
-  <option value="fullName">Nombre completo</option>
-  <option value="company">Empresa</option>
-  <option value="satisfactionLevel">Nivel de satisfacción</option>
-</select>
-<label for="orderDirection">Dirección:</label>
-<select [(ngModel)]="orderDirection" (change)="sort()">
-  <option value="asc">Ascendente</option>
-  <option value="desc">Descendente</option>
-</select>
+  <!-- Opciones de ordenamiento -->
+  <div class="row mt-3 ">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="orderBy">Ordenar por:</label>
+        <select class="form-control" id="orderBy" [(ngModel)]="orderBy" (change)="sort()">
+          <option value="fullName">Nombre completo</option>
+          <option value="company">Empresa</option>
+          <option value="satisfactionLevel">Nivel de satisfacción</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="orderDirection">Dirección:</label>
+        <select class="form-control" id="orderDirection" [(ngModel)]="orderDirection" (change)="sort()">
+          <option value="asc">Ascendente</option>
+          <option value="desc">Descendente</option>
+        </select>
+      </div>
+    </div>
+  </div>
 
-<!-- Lista de personas -->
-<ul>
-  <li *ngFor="let person of employee">{{ person.fullName }} - {{ person.company }}</li>
-</ul>
+  <!-- Lista de personas -->
+  <div class="table-responsive mt-3">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre Completo</th>
+          <th>Fecha</th>
+          <th>Email</th>
+          <th>Área</th>
+          <th>Categoría</th>
+          <th>Compañía</th>
+          <th>Nivel de satisfacción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of employee">
+          <td>{{ person.fullName }}</td>
+          <td>{{ person.date }}</td>
+          <td>{{ person.email }}</td>
+          <td>{{ person.area }}</td>
+          <td>{{ person.category }}</td>
+          <td>{{ person.company }}</td>
+          <td>{{ person.satisfactionLevel }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
