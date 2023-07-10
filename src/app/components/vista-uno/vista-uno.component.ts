@@ -10,6 +10,8 @@ import { EmployeesService } from 'src/app/services/employees/employees.service';
 export class VistaUnoComponent implements OnInit {
   employee: any[] = [];
   query: string = '';
+  orderBy: string = 'fullName';
+  orderDirection: string = 'asc';
 
   constructor(private employeeService: EmployeesService, private router: Router) {}
 
@@ -45,5 +47,31 @@ export class VistaUnoComponent implements OnInit {
         person.fullName.toLowerCase().includes(this.query)
       );
     }
+    this.sort();
+  }
+
+  sort() {
+    this.employee.sort((a: any, b: any) => {
+      const fieldA = a[this.orderBy];
+      const fieldB = b[this.orderBy];
+
+      if (this.orderDirection === 'asc') {
+        if (fieldA < fieldB) {
+          return -1;
+        } else if (fieldA > fieldB) {
+          return 1;
+        } else {
+          return 0;
+        }
+      } else {
+        if (fieldA < fieldB) {
+          return 1;
+        } else if (fieldA > fieldB) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+    });
   }
 }

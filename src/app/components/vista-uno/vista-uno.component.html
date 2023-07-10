@@ -3,15 +3,15 @@
 <!-- Barra de búsqueda -->
 <input type="text" #fullName placeholder="Buscar por fullName" (keyup)="onSearch(fullName.value)">
 
-
 <!-- Opciones de ordenamiento -->
 <label for="orderBy">Ordenar por:</label>
-<select>
-  <option value="satisfaction">Nivel de satisfacción</option>
-  <option value="category">Categoría</option>
+<select [(ngModel)]="orderBy" (change)="sort()">
+  <option value="fullName">Nombre completo</option>
+  <option value="company">Empresa</option>
+  <option value="satisfactionLevel">Nivel de satisfacción</option>
 </select>
 <label for="orderDirection">Dirección:</label>
-<select>
+<select [(ngModel)]="orderDirection" (change)="sort()">
   <option value="asc">Ascendente</option>
   <option value="desc">Descendente</option>
 </select>
