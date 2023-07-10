@@ -1,33 +1,22 @@
-<div class="p-4 container">
-  <h1 class="text-center pb-4">Historia de consumo por tramo</h1>
+<h1>Lista de Personas</h1>
 
-  <form class="mb-3">
-    <div class="row">
-      <div class="col-md-6">
-        <label for="fechaInicial" class="form-label">Fecha inicial:</label>
-        <input type="date" id="fechaInicial" name="fechaInicial" [(ngModel)]="fechaInicial" class="form-control">
-      </div>
-      <div class="col-md-6">
-        <label for="fechaFinal" class="form-label">Fecha final:</label>
-        <input type="date" id="fechaFinal" name="fechaFinal" [(ngModel)]="fechaFinal" class="form-control">
-      </div>
-    </div>
+<!-- Barra de búsqueda -->
+<input type="text" #fullName placeholder="Buscar por fullName" (keyup)="onSearch(fullName.value)">
 
-    <div class="d-flex justify-content-center">
-      <button type="button" class="btn btn-primary mt-3" (click)="obtenerTramos()">Obtener historia</button>
-    </div>
-  </form>
 
-  <div *ngIf="historia && historia.length > 0">
-    <div *ngFor="let tramo of historia" class="tramo card mb-3">
-      <div class="card-body">
-        <h2 class="card-title text-primary">Tramo: {{ tramo.linea }}</h2>
-        <p class="card-text">Consumo: {{ tramo.consumo }}</p>
-        <p class="card-text">Pérdidas: {{ tramo.perdidas }}</p>
-        <p class="card-text">Costo: {{ tramo.costo }}</p>
-      </div>
-    </div>
-  </div>
+<!-- Opciones de ordenamiento -->
+<label for="orderBy">Ordenar por:</label>
+<select>
+  <option value="satisfaction">Nivel de satisfacción</option>
+  <option value="category">Categoría</option>
+</select>
+<label for="orderDirection">Dirección:</label>
+<select>
+  <option value="asc">Ascendente</option>
+  <option value="desc">Descendente</option>
+</select>
 
-  <p *ngIf="historia && historia.length === 0" class="mt-3">No se encontraron resultados de historia.</p>
-</div>
+<!-- Lista de personas -->
+<ul>
+  <li *ngFor="let person of employee">{{ person.fullName }} - {{ person.company }}</li>
+</ul>

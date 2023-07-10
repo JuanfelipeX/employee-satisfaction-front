@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ConfigurationService } from '../configuration.service';
 
 @Injectable({
@@ -18,8 +19,8 @@ export class EmployeesService {
     this.URL_BASE = this.configuration.getUrlBase();
   }
 
-  obtenerEmployees() {
-    return this.http.get<any>(this.URL_BASE + 'employees');
+  obtenerEmployees(): Observable<any[]> {
+    return this.http.get<any[]>(this.URL_BASE + 'employees');
   }
 
   enviarEmployees(data: any) {

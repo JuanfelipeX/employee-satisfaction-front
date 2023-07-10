@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TramosService } from 'src/app/services/employees/tramos.service';
+import { EmployeesService } from 'src/app/services/employees/employees.service';
 
 @Component({
   selector: 'app-vista-uno',
@@ -8,35 +8,41 @@ import { TramosService } from 'src/app/services/employees/tramos.service';
   styleUrls: ['./vista-uno.component.css']
 })
 export class VistaUnoComponent implements OnInit {
-  fechaInicial!: string;
-  fechaFinal!: string;
-  historia!: any[];
+  employee: any[] = [];
+  query: string = '';
 
-  constructor(
-    private tramoService: TramosService,
-    private router: Router
-  ) {
-
-  }
+  constructor(private employeeService: EmployeesService, private router: Router) {}
 
   ngOnInit(): void {
+    this.obtenerEmployee();
   }
 
-  /*
-************************************************
-*               Historico Tramos               *
-************************************************
-*/
-  obtenerTramos() {
-    if (this.fechaInicial && this.fechaFinal) {
-      this.tramoService.historicoTramo({ fechaInicial: this.fechaInicial, fechaFinal: this.fechaFinal }).subscribe(
-        (data: any) => {
-          this.historia = data;
-        },
-        (error: any) => {
-          console.error('Error al obtener la historia:', error);
-          this.historia = [];
-        }
+  onSearch(value: string) {
+    if (value && value.length > 3) {
+      this.query = value.toLowerCase();
+      this.filterEmployee();
+    } else {
+      this.query = '';
+      this.filterEmployee();
+    }
+  }
+
+  obtenerEmployee() {
+    this.employeeService.obtenerEmployees().subscribe(
+      (data: any) => {
+        this.employee = data;
+        this.filterEmployee();
+      },
+      (error: any) => {
+        console.error('Error al obtener los empleados:', error);
+      }
+    );
+  }
+
+  filterEmployee() {
+    if (this.query) {
+      this.employee = this.employee.filter((person: any) =>
+        person.fullName.toLowerCase().includes(this.query)
       );
     }
   }
